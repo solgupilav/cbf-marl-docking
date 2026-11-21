@@ -1,0 +1,57 @@
+{
+  "cbf_enabled": true,
+  "mean_cbf_intervention": 0.43787238001823425,
+  "any_cbf_relaxed_rate": 0.05299999937415123,
+  "any_cbf_infeasible_rate": 0.050999999046325684,
+  "episodes": 1000,
+  "per_agent_success": [
+    0.9990000128746033,
+    0.996999979019165,
+    0.9980000257492065,
+    0.9980000257492065,
+    0.9990000128746033,
+    0.996999979019165,
+    0.9990000128746033,
+    1.0,
+    0.9959999918937683
+  ],
+  "mean_agent_success": 0.9981111288070679,
+  "complete_success_rate": 0.987,
+  "complete_success_ci95": [
+    0.9778853478989854,
+    0.9923872528778702
+  ],
+  "collision_failure_rate": 0.0,
+  "timeout_failure_rate": 0.013,
+  "mean_linear_delta_v_per_agent": 0.3462843894958496,
+  "mean_linear_delta_v_per_episode": 3.1165592670440674,
+  "mean_angular_delta_v_per_agent": 0.1773710697889328,
+  "mean_linear_delta_v_successful": 0.34615349769592285,
+  "per_agent_target_collision": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "mean_agent_target_collision": 0.0,
+  "any_target_collision_rate": 0.0,
+  "per_agent_interagent_collision": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "mean_agent_interagent_collision": 0.0,
+  "any_interagent_collision_rate": 0.0,
+  "mean_episode_len": 186.89599609375
+}

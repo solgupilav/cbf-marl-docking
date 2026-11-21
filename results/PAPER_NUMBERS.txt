@@ -1,0 +1,99 @@
+Results reported in the paper, computed from the files in results/.
+Scoring: 4 cm / 2 deg capture gate, half-space keep-out (pole 0.04), filter
+on the sensed state, evaluation seed 24680, 1000 episodes per seed.
+
+Table 10: main result (5 seeds x 1000 episodes)
+-----------------------------------------------
+All agents docked, no collision   99.54%  (Wilson 95% CI 99.31-99.69%)
+Failed, collision                 0.00%
+Failed, timeout                   0.46%
+Per-agent capture                 99.92%
+Episodes with inter-agent contact 0/5000
+Episodes with target contact      0/5000
+Mean linear delta-v per agent     0.3446 m/s
+Mean angular delta-v per agent    0.1716 rad/s
+Mean episode length               188.0 steps
+Hard-infeasible QP (episodes)     5.16%
+Per-seed success (Figure 7)       99.4%, 99.9%, 99.3%, 100.0%, 99.1%
+Per-seed linear delta-v           0.3486, 0.3449, 0.3460, 0.3443, 0.3392
+Contact rate bound (rule of three) 0.06% at 95% confidence
+
+Table 11: safety-filter ablation (1000 episodes each)
+-----------------------------------------------------
+Trained with the filter: seed 3. Trained without the filter: training seed 0.
+                             success  per-agent    inter   target  timeout  lin dv
+trained with, eval on        100.00%    100.00%    0.00%    0.00%    0.00%   0.344
+trained with, eval off         0.00%      0.00%   79.10%   20.90%    0.00%   0.179
+trained without, eval off      0.00%      2.58%   79.90%   13.50%    6.60%   0.195
+trained without, eval on       0.10%     18.84%    0.00%    0.90%   99.00%   0.318
+
+Table 12: LQR nominal through the same filter (1000 episodes each)
+------------------------------------------------------------------
+                  success    inter   target  timeout
+LQR, filter off     0.00%   93.20%    6.80%    0.00%
+LQR, filter on      0.00%    0.00%    1.10%   98.90%
+RL, filter on      99.54%    0.00%    0.00%    0.46%  (Table 10)
+
+Table 13: fuel against the LQR reference (lqr/fuel_reference.txt)
+-----------------------------------------------------------------
+Linear delta-v per agent   RL 0.3446  LQR 0.1520 m/s    +127%
+Angular delta-v per agent  RL 0.1716  LQR 0.0460 rad/s  +273%
+
+Table 14: target keep-out geometry (5 seeds x 1000 episodes)
+------------------------------------------------------------
+keep-out     horizon  success  target  timeout  steps
+m = 8            300   99.12%      13       31    170
+m = 8            600   99.44%      15       13    171
+m = 16           300   99.58%       0       21    268
+m = 16           600   99.98%       0        1    268
+half-space       300   99.54%       0       23    188
+half-space       600   99.84%       0        8    189
+
+Table 15: actuator uncertainty (5 seeds x 1000 episodes)
+--------------------------------------------------------
+actuation   success  target  inter  QP infeas.
+exact        99.54%       0      0       5.16%
+typical      99.40%       0      0       5.34%
+high         99.36%       0      1       5.64%
+
+Table 16: swarm size (5 seeds x 1000 episodes)
+----------------------------------------------
+N     success  per-agent   target   inter  QP infeas.
+4       99.9%     99.99%    0.00%   0.00%       0.00%
+6       99.9%     99.98%    0.00%   0.00%       0.64%
+9       99.5%     99.92%    0.00%   0.00%       5.16%
+12      98.2%     99.74%    0.04%   0.00%      18.70%
+16      94.3%     99.10%    0.46%   0.04%      46.86%
+20      85.9%     97.48%    1.34%   0.24%      69.80%
+
+Table 17: compute cost (compute/flop_count.txt)
+-----------------------------------------------
+policy parameters                         75,788       (296 KiB fp32, 74 KiB int8)
+policy forward, one agent                151,564 FLOP  {'matmul': 150528, 'add': 524, 'tanh': 512}
+                                        as coded    Table 17
+translational rows K                          11          10
+  enumerated R = K + 6 box                    17          16
+  candidate active sets                      833         696
+  one solve, tiers 1-2 only               26,209      22,333
+  one solve, tiers 1-3 (full)            215,929     174,653
+  staged relaxation: up to 3 solves per step (soft cols [9, 10])
+rotational solve (R=7, 63 sets)           10,264      10,244
+constraint-row construction/agent            498
+filter, fast path (typical)                  938         898
+filter, one full solve                   226,691     185,395
+filter, worst case (3 solves)            658,549     534,701
+TOTAL, one full solve                    378,255     336,959
+TOTAL, worst case                        810,113     686,265
+Seed 3 with int8 weights: success 100.00%, linear delta-v 0.3443 (fp32 0.3443)
+Seed 3 with fp16 weights: success 100.00%
+
+Figures 4 and 5 (main/seed*.npz)
+--------------------------------
+Minimum separation  0.5146 m; 184 of 5000 episodes inside D_s = 0.55 m
+Time to capture     median 169 s, 95th percentile 190 s, max 299 s; 44966 of 45000 agent-episodes captured
+
+Discussion: probabilistic safety (probabilistic_safety/paper_numbers.json)
+--------------------------------------------------------------------------
+Sensing only: sigma_ij 22.7 mm at 11.8 m, buffer 4.65 sigma, 1.6e-06 per pair and step
+typical  actuation: sigma_a 13.8 mm, per episode 1.2e-05
+high     actuation: sigma_a 55.1 mm, per episode 4.4e-03

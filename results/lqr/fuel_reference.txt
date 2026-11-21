@@ -1,0 +1,11 @@
+====================================================================
+COLLISION-AGNOSTIC LQR REFERENCE (400 episodes, 9 agents, tol 0.04 m, attitude 2.00 deg)
+====================================================================
+  all agents docked      : 400/400 = 100.0%
+  per-agent capture rate : 100.00%
+  linear  dv per agent   : mean 0.1520  median 0.1522 m/s
+  linear  dv per episode : mean 1.3677 m/s (sum of 9)
+  angular dv per agent   : mean 0.0460 rad/s
+  linear dv, successful episodes only: 0.1520 m/s
+
+  Neighbours are ignored. This is a lower bound on fuel.
