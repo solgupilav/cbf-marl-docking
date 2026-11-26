@@ -4,7 +4,7 @@ Code for the paper "Safe Multi-Agent Spacecraft Docking with Control Barrier
 Functions and Reinforcement Learning" by Selim Olgu Pilav, accepted to the 2027
 IEEE Aerospace Conference.
 
-[Paper (PDF)](https://solgupilav.github.io/papers/pilav_2027_safe_multi_agent_docking.pdf)
+[Paper (PDF)](https://solgupilav.github.io/papers/docking.pdf)
 
 Nine 6U CubeSat-sized chasers dock at the same time on ports of a target
 spacecraft. The dynamics are Clohessy–Wiltshire translation and quaternion
